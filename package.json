@@ -2,16 +2,13 @@
   "name": "prd-cdk",
   "description": "CDK for property reports dashboard",
   "version": "0.1.0",
-  "bin": {
-    "main": "bin/main.js"
-  },
   "scripts": {
     "start": "npm run build && npm run test && cdk ls",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "clean": "git clean -dfX"
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
-import PrdResourcesStack from "../lib/prd-resources-stack";
+import PrdResourcesStack from "./prd-resources-stack";
 
 const appName = process.env.npm_package_name;
 const env: cdk.Environment = {
