@@ -3,12 +3,13 @@
   "description": "CDK for property reports dashboard",
   "version": "0.1.0",
   "scripts": {
-    "start": "npm run build && npm run test && cdk ls",
-    "build": "tsc",
+    "dev": "NODE_ENV=dev && npm run build",
+    "dev-win": "set NODE_ENV=dev&& npm run build",
+    "build": "tsc && npm run test && cdk ls",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist cdk.out"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
