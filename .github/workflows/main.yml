@@ -33,7 +33,7 @@ jobs:
           aws-region: "us-west-2"
 
       - name: Build cdk
-        run: npm run build
+        run: npm i && npm run build
 
       - name: Check diff
         run: cdk diff
