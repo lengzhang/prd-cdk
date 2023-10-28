@@ -19,10 +19,10 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "lts"
+          node-version: "18.x"
 
       - name: Install CDK
-        run: |
+        run:
           npm install -g aws-cdk
 
       - name: Configure AWS credentials
