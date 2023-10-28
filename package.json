@@ -1,10 +1,12 @@
 {
   "name": "prd-cdk",
+  "description": "CDK for property reports dashboard",
   "version": "0.1.0",
   "bin": {
     "main": "bin/main.js"
   },
   "scripts": {
+    "start": "npm run build && npm run test && cdk ls",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
