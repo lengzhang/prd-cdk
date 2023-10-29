@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CognitoUserPoolStack matches the snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "testuserpoolname6617CE2F": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AccountRecoverySetting": {
+          "RecoveryMechanisms": [
+            {
+              "Name": "verified_email",
+              "Priority": 1,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "AutoVerifiedAttributes": [
+          "email",
+        ],
+        "EmailVerificationMessage": "Thanks for signing up. Please verify your account by the verification code {####}.",
+        "EmailVerificationSubject": "[PRD] You need to verify your email",
+        "Policies": {
+          "PasswordPolicy": {
+            "MinimumLength": 8,
+            "RequireLowercase": true,
+            "RequireNumbers": true,
+            "RequireSymbols": false,
+            "RequireUppercase": true,
+          },
+        },
+        "Schema": [
+          {
+            "Mutable": false,
+            "Name": "email",
+            "Required": true,
+          },
+          {
+            "Mutable": true,
+            "Name": "family_name",
+            "Required": true,
+          },
+          {
+            "Mutable": true,
+            "Name": "given_name",
+            "Required": true,
+          },
+          {
+            "Mutable": true,
+            "Name": "preferred_username",
+            "Required": true,
+          },
+          {
+            "Mutable": false,
+            "Name": "updated_at",
+            "Required": true,
+          },
+          {
+            "AttributeDataType": "Number",
+            "Mutable": false,
+            "Name": "created_at",
+          },
+        ],
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "UserPoolName": "test-user-pool-name",
+        "UsernameAttributes": [
+          "email",
+        ],
+        "VerificationMessageTemplate": {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "Thanks for signing up. Please verify your account by the verification code {####}.",
+          "EmailSubject": "[PRD] You need to verify your email",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "testuserpoolnametestappclientname378F5A6F": {
+      "Properties": {
+        "AllowedOAuthFlows": [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": [
+          "https://example.com",
+        ],
+        "ClientName": "test-app-client-name",
+        "ExplicitAuthFlows": [
+          "ALLOW_USER_PASSWORD_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": [
+          "COGNITO",
+        ],
+        "UserPoolId": {
+          "Ref": "testuserpoolname6617CE2F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+    "testuserpoolnametestcognitodomainnameEE251E23": {
+      "Properties": {
+        "Domain": "test-cognito-domain-prefix",
+        "UserPoolId": {
+          "Ref": "testuserpoolname6617CE2F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolDomain",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
