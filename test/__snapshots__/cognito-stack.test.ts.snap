@@ -1,0 +1,340 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CognitoStack matches the snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "testidentitypoolname2BA432B1": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "testuserpoolname6617CE2F",
+        "testuserpoolnametestuserpoolclientname68410DE1",
+        "testuserpoolnametestuserpooldomainnameBB32991B",
+      ],
+      "Properties": {
+        "AllowUnauthenticatedIdentities": false,
+        "CognitoIdentityProviders": [
+          {
+            "ClientId": {
+              "Ref": "testuserpoolnametestuserpoolclientname68410DE1",
+            },
+            "ProviderName": {
+              "Fn::Join": [
+                "",
+                [
+                  "cognito-idp.",
+                  {
+                    "Ref": "AWS::Region",
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix",
+                  },
+                  "/",
+                  {
+                    "Ref": "testuserpoolname6617CE2F",
+                  },
+                ],
+              ],
+            },
+            "ServerSideTokenCheck": true,
+          },
+        ],
+        "IdentityPoolName": "test-identity-pool-name",
+      },
+      "Type": "AWS::Cognito::IdentityPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "testidentitypoolnameAuthenticatedRole8340A8E2": {
+      "DependsOn": [
+        "testuserpoolname6617CE2F",
+        "testuserpoolnametestuserpoolclientname68410DE1",
+        "testuserpoolnametestuserpooldomainnameBB32991B",
+      ],
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated",
+                },
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "testidentitypoolname2BA432B1",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Default Authenticated Role for Identity Pool ",
+              {
+                "Fn::GetAtt": [
+                  "testidentitypoolname2BA432B1",
+                  "Name",
+                ],
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testidentitypoolnameAuthenticatedRoleDefaultPolicy89557359": {
+      "DependsOn": [
+        "testuserpoolname6617CE2F",
+        "testuserpoolnametestuserpoolclientname68410DE1",
+        "testuserpoolnametestuserpooldomainnameBB32991B",
+      ],
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:PutObject",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s3:::test-report-bucket-name",
+                "arn:aws:s3:::test-report-bucket-name/*",
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "testidentitypoolnameAuthenticatedRoleDefaultPolicy89557359",
+        "Roles": [
+          {
+            "Ref": "testidentitypoolnameAuthenticatedRole8340A8E2",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "testidentitypoolnameDefaultRoleAttachmentD4F7ACA5": {
+      "DependsOn": [
+        "testuserpoolname6617CE2F",
+        "testuserpoolnametestuserpoolclientname68410DE1",
+        "testuserpoolnametestuserpooldomainnameBB32991B",
+      ],
+      "Properties": {
+        "IdentityPoolId": {
+          "Ref": "testidentitypoolname2BA432B1",
+        },
+        "Roles": {
+          "authenticated": {
+            "Fn::GetAtt": [
+              "testidentitypoolnameAuthenticatedRole8340A8E2",
+              "Arn",
+            ],
+          },
+          "unauthenticated": {
+            "Fn::GetAtt": [
+              "testidentitypoolnameUnauthenticatedRole1BCD713F",
+              "Arn",
+            ],
+          },
+        },
+      },
+      "Type": "AWS::Cognito::IdentityPoolRoleAttachment",
+    },
+    "testidentitypoolnameUnauthenticatedRole1BCD713F": {
+      "DependsOn": [
+        "testuserpoolname6617CE2F",
+        "testuserpoolnametestuserpoolclientname68410DE1",
+        "testuserpoolnametestuserpooldomainnameBB32991B",
+      ],
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "unauthenticated",
+                },
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "testidentitypoolname2BA432B1",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Default Unauthenticated Role for Identity Pool ",
+              {
+                "Fn::GetAtt": [
+                  "testidentitypoolname2BA432B1",
+                  "Name",
+                ],
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testuserpoolname6617CE2F": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AccountRecoverySetting": {
+          "RecoveryMechanisms": [
+            {
+              "Name": "verified_email",
+              "Priority": 1,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "AutoVerifiedAttributes": [
+          "email",
+        ],
+        "EmailVerificationMessage": "Thanks for signing up. Please verify your account by the verification code {####}.",
+        "EmailVerificationSubject": "[PRD] You need to verify your email",
+        "Policies": {
+          "PasswordPolicy": {
+            "MinimumLength": 8,
+            "RequireLowercase": true,
+            "RequireNumbers": true,
+            "RequireSymbols": false,
+            "RequireUppercase": true,
+          },
+        },
+        "Schema": [
+          {
+            "Mutable": false,
+            "Name": "email",
+            "Required": true,
+          },
+          {
+            "Mutable": true,
+            "Name": "preferred_username",
+            "Required": true,
+          },
+          {
+            "Mutable": false,
+            "Name": "updated_at",
+            "Required": true,
+          },
+          {
+            "AttributeDataType": "Number",
+            "Mutable": false,
+            "Name": "created_at",
+          },
+        ],
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "UserPoolName": "test-user-pool-name",
+        "UsernameAttributes": [
+          "email",
+        ],
+        "VerificationMessageTemplate": {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "Thanks for signing up. Please verify your account by the verification code {####}.",
+          "EmailSubject": "[PRD] You need to verify your email",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "testuserpoolnametestuserpoolclientname68410DE1": {
+      "Properties": {
+        "AllowedOAuthFlows": [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": [
+          "https://example.com",
+        ],
+        "ClientName": "test-user-pool-client-name",
+        "ExplicitAuthFlows": [
+          "ALLOW_USER_PASSWORD_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": [
+          "COGNITO",
+        ],
+        "UserPoolId": {
+          "Ref": "testuserpoolname6617CE2F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+    "testuserpoolnametestuserpooldomainnameBB32991B": {
+      "Properties": {
+        "Domain": "test-user-pool-domain-prefix",
+        "UserPoolId": {
+          "Ref": "testuserpoolname6617CE2F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolDomain",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

@@ -14,6 +14,7 @@ class PrdResourcesStack extends cdk.Stack {
 
   createPrdReportsBucket(reportsBucketName: string) {
     new cdk.aws_s3.Bucket(this, reportsBucketName, {
+      bucketName: reportsBucketName,
       versioned: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,

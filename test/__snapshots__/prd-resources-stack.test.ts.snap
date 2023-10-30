@@ -71,6 +71,7 @@ exports[`PrdResourcesStack matches the snapshot 1`] = `
     "testbucketname086F697F": {
       "DeletionPolicy": "Delete",
       "Properties": {
+        "BucketName": "test-bucket-name",
         "Tags": [
           {
             "Key": "aws-cdk:auto-delete-objects",

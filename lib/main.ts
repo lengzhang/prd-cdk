@@ -5,7 +5,7 @@ import * as dotenv from "dotenv";
 import * as cdk from "aws-cdk-lib";
 
 import PrdResourcesStack from "./prd-resources-stack";
-import CognitoUserPoolStack from "./cognito-user-pool-stack";
+import CognitoUserPoolStack from "./cognito-stack";
 import { Environment } from "./types";
 
 dotenv.config();
@@ -28,17 +28,21 @@ function main() {
     reportsBucketName: prdResourcesBucketName,
   });
 
-  const cognitoUserPoolStackName = `${namePrefix}-cognito-user-pool-stack`;
-  const cognitoUserPoolName = `${namePrefix}-cognito-user-pool`;
-  const cognitoAppClientName = `${namePrefix}-cognito-app-client`;
-  const cognitoUserPoolDomainName = `${namePrefix}-cognito-user-pool-domain`;
-  const cognitoDomainPrefix =
+  const cognitoStackName = `${namePrefix}-cognito-stack`;
+  const userPoolName = `${namePrefix}-cognito-user-pool`;
+  const userPoolClientName = `${namePrefix}-cognito-user-pool-client`;
+  const userPoolDomainName = `${namePrefix}-cognito-user-pool-domain`;
+  const userPoolDomainPrefix =
     (env.stage === "prod" ? "" : env.stage + "-") + appName;
-  new CognitoUserPoolStack(app, cognitoUserPoolStackName, {
-    userPoolName: cognitoUserPoolName,
-    appClientName: cognitoAppClientName,
-    cognitoDomainName: cognitoUserPoolDomainName,
-    cognitoDomainPrefix,
+  const identityPoolName = `${namePrefix}-cognito-identity-pool`;
+  new CognitoUserPoolStack(app, cognitoStackName, {
+    env,
+    userPoolName,
+    userPoolClientName,
+    userPoolDomainName,
+    userPoolDomainPrefix,
+    identityPoolName,
+    reportsBucketName: prdResourcesBucketName,
   });
 }
 
