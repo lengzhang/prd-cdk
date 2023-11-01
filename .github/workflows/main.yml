@@ -32,11 +32,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: "us-west-2"
 
+      - name: Set environment variables
+        run: |
+          touch .env
+          echo STAGE="prod" >> .env
+          echo ORIGIN="https://prd.lengzhang.me" >> .env
+
       - name: Build cdk
         run: npm i && npm run build
 
-      - name: Check diff
-        run: cdk diff
-
       - name: Deploy to AWS
-        run: cdk deploy --require-approval=never
+        run: npm run deploy
