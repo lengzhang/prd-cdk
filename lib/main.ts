@@ -32,8 +32,7 @@ function main() {
   const userPoolName = `${namePrefix}-cognito-user-pool`;
   const userPoolClientName = `${namePrefix}-cognito-user-pool-client`;
   const userPoolDomainName = `${namePrefix}-cognito-user-pool-domain`;
-  const userPoolDomainPrefix =
-    (env.stage === "prod" ? "" : env.stage + "-") + appName;
+  const userPoolDomainPrefix = `${env.stage}-${appName}-${env.account}`;
   const identityPoolName = `${namePrefix}-cognito-identity-pool`;
   new CognitoUserPoolStack(app, cognitoStackName, {
     env,
